@@ -20,8 +20,7 @@ public class HomeController extends HttpServlet {
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("===HomeController===");
-		Command c = Separator.init(request,response);
-		DispatcherServlet.send(request, response, c);
+		DispatcherServlet.send(request, response, Separator.init(request,response));
 	}
 
 

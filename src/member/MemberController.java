@@ -22,10 +22,30 @@ public class MemberController extends HttpServlet {
 		System.out.println("=== member 컨트롤러 진입===");
 		Separator.init(request,response);
 		MemberService service = MemberServiceImpl.getInstance();
+		MemberBean member = new MemberBean();
 		switch (Separator.command.getAction()) {
-		case "move":break;
-		case "login":break;
+		case "login":
+			member.setId(request.getParameter("id"));
+			member.setPw(request.getParameter("pw"));
+			String name = service.login(member);
+			System.out.println("name==="+name);
+			if (name.equals("")) {
+				Separator.command.setPage("login");
+				Separator.command.setView();
+			} else {
+				Separator.command.setDirectory(request.getParameter("directory"));
+				member.setName(name);
+				request.setAttribute("abc", member);
+			}
+			break;
 		case "regist":break;
+		case "update":break;
+		case "delete":break;
+		case "detail":break;
+		case "list":break; // 오늘 하지 말것
+		case "logout":break;
+		case "count":break;
+		case "find_by":break;// 오늘 하지 말것
 		default:
 			break;
 		}
