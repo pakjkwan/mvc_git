@@ -8,35 +8,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-/*
-	<li><a href="${context}/grade/regist.do">등록</a></li>
-		<li><a href="${context}/grade/update.do">수정</a></li>
-		<li><a href="${context}/grade/delete.do">삭제</a></li>
-		<li><a href="${context}/grade/list.do">목록 </a></li>
-		<li><a href="${context}/grade/count.do">카운트</a></li>
-		<li><a href="${context}/grade/search.do">
- * */
-@WebServlet({"/grade/main.do",
-		"/grade/regist.do",
-		"/grade/update.do",
-		"/grade/delete.do",
-		"/grade/list.do",
-		"/grade/count.do",
-		"/grade/search.do"})
+
+import global.Command;
+import global.DispatcherServlet;
+import global.Separator;
+
+@WebServlet("/grade.do")
 public class GradeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String sPath = request.getServletPath();
-		String[] arr = sPath.split("/");
-		String pkg = arr[1];
-		String view = arr[2].substring(0, arr[2].indexOf("."));
-		RequestDispatcher dis = request.getRequestDispatcher("/WEB-INF/"+pkg+"/"+view+".jsp");
-		dis.forward(request, response);
-		
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("===GradeController===");
+		Command c = Separator.init(request,response);
+		DispatcherServlet.send(request, response, c);
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-
 }
